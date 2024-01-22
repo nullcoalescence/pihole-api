@@ -16,6 +16,7 @@ namespace pihole_api
 
             // Add services to the container.
             builder.Services.AddScoped<IShellService, ShellService>();
+            builder.Services.AddScoped<IPiholeService, PiholeService>();
 
             builder.Services.AddControllers();
 

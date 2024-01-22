@@ -2,6 +2,6 @@
 {
     public interface IShellService
     {
-        public Task<string> ExecuteShellCommand(string command);
+        public Task<string> ExecuteShellCommandAsync(string command);
     }
 }
