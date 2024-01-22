@@ -25,8 +25,6 @@ namespace pihole_api
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
             });
 
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
