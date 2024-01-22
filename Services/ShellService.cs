@@ -9,7 +9,7 @@ namespace pihole_api.Services
     {
         private ILogger<ShellService> _logger;
 
-        private string _shellName = "bash";
+        private const string ShellName = "bash";
 
         public ShellService(ILogger<ShellService> logger)
         {
@@ -18,11 +18,16 @@ namespace pihole_api.Services
 
         public async Task<string> ExecuteShellCommand(string command)
         {
+            _logger.LogInformation($"Starting process to execute command in {ShellName} shell: {command}");
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             Process process = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = _shellName,
+                    FileName = ShellName,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -34,6 +39,10 @@ namespace pihole_api.Services
             await process.StandardInput.WriteLineAsync(command);
 
             var output = await process.StandardOutput.ReadLineAsync();
+
+            stopwatch.Stop();
+            _logger.LogInformation($"Executed command in {stopwatch.Elapsed.TotalSeconds} seconds.");
+
             return output;
         }
     }
