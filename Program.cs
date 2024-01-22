@@ -1,6 +1,7 @@
 
 namespace pihole_api
 {
+    using pihole_api.Services;
     using System.Reflection;
 
     public class Program
@@ -14,6 +15,7 @@ namespace pihole_api
             builder.Logging.AddConsole();
 
             // Add services to the container.
+            builder.Services.AddScoped<IShellService, ShellService>();
 
             builder.Services.AddControllers();
 
