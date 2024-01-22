@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using pihole_api.Services;
 
 namespace pihole_api.Controllers
 {
@@ -8,10 +9,12 @@ namespace pihole_api.Controllers
     public class PiholeController : ControllerBase
     {
         private ILogger<PiholeController> _logger;
+        private IShellService _shellService;
 
-        public PiholeController(ILogger<PiholeController> logger)
+        public PiholeController(ILogger<PiholeController> logger, IShellService shellService)
         {
             _logger = logger;
+            _shellService = shellService;
         }
 
         /// <summary>
@@ -90,6 +93,15 @@ namespace pihole_api.Controllers
         public IActionResult DeviceHasActiveDhcpLease([FromBody] string hostname)
         {
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("TestShellService")]
+        public async Task<IActionResult> TestShelLService()
+        {
+            var result = await _shellService.ExecuteShellCommand("echo hello");
+
+            return Ok(result);
         }
 
     }
