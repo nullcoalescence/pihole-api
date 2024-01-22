@@ -16,7 +16,7 @@ namespace pihole_api.Services
             _logger = logger;
         }
 
-        public async Task<string> ExecuteShellCommand(string command)
+        public async Task<string> ExecuteShellCommandAsync(string command)
         {
             _logger.LogInformation($"Starting process to execute command in {ShellName} shell: {command}");
 

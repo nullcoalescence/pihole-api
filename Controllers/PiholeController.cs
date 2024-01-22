@@ -8,13 +8,15 @@ namespace pihole_api.Controllers
     [ApiController]
     public class PiholeController : ControllerBase
     {
-        private ILogger<PiholeController> _logger;
-        private IShellService _shellService;
+        private readonly ILogger<PiholeController> _logger;
+        private readonly IShellService _shellService;
+        private readonly IPiholeService _piholeService;
 
-        public PiholeController(ILogger<PiholeController> logger, IShellService shellService)
+        public PiholeController(ILogger<PiholeController> logger, IShellService shellService, IPiholeService piholeService)
         {
             _logger = logger;
             _shellService = shellService;
+            _piholeService = piholeService;
         }
 
         /// <summary>
@@ -97,9 +99,9 @@ namespace pihole_api.Controllers
 
         [HttpGet]
         [Route("TestShellService")]
-        public async Task<IActionResult> TestShelLService()
+        public async Task<IActionResult> TestShellService()
         {
-            var result = await _shellService.ExecuteShellCommand("echo hello");
+            var result = await _shellService.ExecuteShellCommandAsync("echo hello");
 
             return Ok(result);
         }
